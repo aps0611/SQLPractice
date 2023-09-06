@@ -1,0 +1,40 @@
+## ROUND(f,p) returns f rounded to p decimal places.
+
+The number of decimal places may be negative, this will round to the nearest 10 (when p is -1) or 100 (when p is -2) or 1000 (when p is -3) etc..
+
+ROUND(7253.86, 0)    ->  7254
+ROUND(7253.86, 1)    ->  7253.9
+ROUND(7253.86,-3)    ->  7000
+
+================================================================================================================================================================
+
+## FLOOR
+FLOOR(f) returns the integer value of f
+
+FLOOR(f) give the integer that is equal to, or just less than f. FLOOR always rounds down.
+
+  FLOOR(2.7) ->  2
+  FLOOR(-2.7) -> -3
+
+
+================================================================================================================================================================
+
+## CEIL
+CEIL(f) is ceiling, it returns the integer that is equal to or just more than f
+
+CEIL(f) give the integer that is equal to, or just higher than f. CEIL always rounds up.
+
+ CEIL(2.7)  ->  3
+ CEIL(-2.7) -> -2
+
+================================================================================================================================================================
+
+## MOD
+MOD(a,b) returns the remainder when a is divied by b
+
+If you use MOD(a, 2) you get 0 for even numbers and 1 for odd numbers.
+
+If you use MOD(a, 10) you get the last digit of the number a.
+
+ MOD(27,2) ->  1
+ MOD(27,10) ->  7
