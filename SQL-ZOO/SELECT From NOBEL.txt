@@ -1,0 +1,160 @@
+nobel Nobel Laureates
+We continue practicing simple SQL queries on a single table.
+
+This tutorial is concerned with a table of Nobel prize winners:
+
+nobel(yr, subject, winner)
+Using the SELECT statement.
+
+
+
+01. Change the query shown so that it displays Nobel prizes for 1950.
+
+SELECT yr, subject, winner
+  FROM nobel
+ WHERE yr = 1950
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+02. Show who won the 1962 prize for literature.
+
+SELECT winner
+  FROM nobel
+ WHERE yr = 1962
+   AND subject = 'literature'
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+03. Show the year and subject that won 'Albert Einstein' his prize.
+
+SELECT yr, subject FROM nobel
+WHERE winner = 'Albert Einstein'
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+04. Give the name of the 'peace' winners since the year 2000, including 2000.
+
+SELECT winner FROM nobel
+WHERE yr >= 2000 AND subject = 'Peace'
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+5.
+Show all details (yr, subject, winner) of the literature prize winners for 1980 to 1989 inclusive.
+
+SELECT * FROM nobel
+WHERE yr BETWEEN 1980 AND 1989 
+AND subject = 'Literature'
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+
+6.
+Show all details of the presidential winners:
+
+Theodore Roosevelt
+Thomas Woodrow Wilson
+Jimmy Carter
+Barack Obama
+
+
+SELECT * FROM nobel
+ WHERE winner IN ('Theodore Roosevelt',
+                  'Woodrow Wilson',
+                  'Jimmy Carter',
+                  'Barack Obama')
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+7.
+Show the winners with first name John
+
+Select winner from nobel
+where winner LIKE 'John%'
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+8.
+Show the year, subject, and name of physics winners for 1980 together with the chemistry winners for 1984.
+
+select yr, subject, winner from nobel 
+where (subject = 'Physics' and yr = 1980)
+OR
+(subject = 'Chemistry' and yr = 1984)
+
+------------------------------------------------------------------------------------------------------------------------------
+
+9.
+Show the year, subject, and name of winners for 1980 excluding chemistry and medicine
+
+select yr, subject, winner from nobel 
+where (yr = 1980)
+AND
+(subject NOT IN ('Chemistry', 'Medicine'))
+
+------------------------------------------------------------------------------------------------------------------------------
+
+10.
+Show year, subject, and name of people who won a 'Medicine' prize in an early year (before 1910, not including 1910) together with winners of a 'Literature' prize in a later year (after 2004, including 2004)
+
+SELECT yr, subject, winner FROM nobel 
+WHERE (subject = 'Medicine' and yr < 1910)
+OR (subject = 'Literature' and yr > 2003)
+
+------------------------------------------------------------------------------------------------------------------------------
+
+11.
+Find all details of the prize won by PETER GRÜNBERG
+
+SELECT * FROM nobel
+WHERE winner = 'PETER GRÜNBERG'
+
+------------------------------------------------------------------------------------------------------------------------------
+
+12. Find all details of the prize won by EUGENE O'NEILL
+
+Escaping single quotes
+You can't put a single quote in a quote string directly. You can use two single quotes within a quoted string.
+
+SELECT * FROM nobel
+WHERE winner = 'EUGENE O''NEILL'
+
+------------------------------------------------------------------------------------------------------------------------------
+
+13.
+Knights in order
+
+List the winners, year and subject where the winner starts with Sir. Show the the most recent first, then by name order.
+
+SELECT winner, yr, subject FROM nobel 
+WHERE winner LIKE 'SIR%'
+ORDER BY yr DESC, winner
+
+------------------------------------------------------------------------------------------------------------------------------
+
+14.
+The expression subject IN ('chemistry','physics') can be used as a value - it will be 0 or 1.
+
+Show the 1984 winners and subject ordered by subject and winner name; but list chemistry and physics last.
+
+SELECT winner, subject
+  FROM nobel
+ WHERE yr=1984
+ ORDER BY 
+CASE WHEN subject IN ('chemistry', 'physics') THEN 1 ELSE 0 END,
+subject, winner
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+ORDER BY: This clause is used to determine the order in which the results will be sorted. It specifies a custom sorting order using a CASE expression and then sorts the results based on the "subject" and "winner" columns.
+
+CASE WHEN subject IN ('chemistry', 'physics') THEN 1 ELSE 0 END: This is a CASE expression that assigns a value of 1 to rows where the "subject" column contains either 'chemistry' or 'physics,' and 0 to all other rows. This means that Nobel Prize winners in chemistry or physics will be prioritized in the sorting order.
+
+subject: If two rows have the same value for the custom sorting order (i.e., both are 1 or both are 0), they will then be sorted based on the "subject" column in ascending order. This means subjects like 'chemistry' will come before subjects like 'literature' in the results.
+
+winner: If rows have the same value for both the custom sorting order and the "subject" column, they will be sorted based on the "winner" column in ascending order. This means Nobel Prize winners' names will be alphabetically ordered within each subject category.
+
